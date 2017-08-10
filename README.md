@@ -9,6 +9,7 @@
 - [Jekyll](https://jekyllrb.com/)
 - [carte-noire theme](http://carte-noire.jacobtomlinson.co.uk/) 
 - [Google Analytics](http://www.google.com/analytics/)
+- [favicons](http://realfavicongenerator.net/)
 
 ## Installation and Building
 
