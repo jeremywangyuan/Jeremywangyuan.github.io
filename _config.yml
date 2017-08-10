@@ -5,7 +5,7 @@ description: "Go Supreme"
 baseurl: ""
 url: "https://jeremywangyuan.github.io/"
 title_description: "Weclome to my palace !!"
-title_image: "http://imgur.com/g44wt80"
+title_image: "https://www.gravatar.com/avatar/00000000000000000000000000000000?s=500&d=mm"
 google_analytics: "UA-20365477-4"
 disqus_account: jeremywangyuan
 github_repository: https://jeremywangyuan.github.io/
@@ -22,6 +22,7 @@ google_plus_link:
 stackoverflow_link: 
 xing_link:
 facebook_link: fb.me/jeremywangyuan
+telegram_username: jeremywangyuan
 
 # Footer
 footer_left: "Made with <i class=\"fa fa-heart\"></i> by <a href=\"https://fb.me/jeremywangyuan\">Jeremywangyuan</a>"
