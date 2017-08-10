@@ -15,6 +15,7 @@ $stack-overflow: #c98b3b;
 $instagram:      #cd486b;
 $reddit:         #cee3f8;
 $rss:            #eea33a;
+$telegram:       #cd486b;
 
 $darker:         #21211E;
 $dark:           #2D2D29;
@@ -210,6 +211,10 @@ ul {
 	
 	.fa-instagram:hover {
 		color: $instagram;
+	}
+    
+    .fa-telegram:hover {
+		color: $telegram;
 	}
 	
 	.fa-reddit-alien:hover {
