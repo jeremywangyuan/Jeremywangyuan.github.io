@@ -18,6 +18,7 @@ tags:
 上乘企業願景 下起品牌定位
 ```
 ex: Disney
+
 | | 企業願景 | 品牌願景 | 品牌定位 |
 |:---:|:------:|:------:|:------:|
 |定義|希望成為什麼樣的企業|企業對顧客的價值承諾|品牌帶給顧客最具吸引力的特色|
@@ -29,8 +30,7 @@ ex: Disney
 
 ### 延伸閱讀 
 David A. Aaker - [It Starts With a Brand Vision](https://www.prophet.com/thinking/2014/03/185-it-starts-with-a-brand-vision/) 
-```
-The brand essence represents a central theme of the brand vision – but it’s optional.
-```
+>>The brand essence represents a central theme of the brand vision – but it’s optional.
+
 
 
