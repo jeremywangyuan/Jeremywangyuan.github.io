@@ -20,7 +20,7 @@ tags:
 ex: Disney
 
 | | 企業願景 | 品牌願景 | 品牌定位 |
-|:---:|:------:|:------:|:------:|
+|:---|:------|:------|:------|
 |定義|希望成為什麼樣的企業|企業對顧客的價值承諾|品牌帶給顧客最具吸引力的特色|
 |呈現形式|一段文字|一個架構(品牌精髓+價值)|一個口號|
 |主要任務|指引企業長期發展方向|聚焦顧客所在意之價值, 導引員工與合作夥伴的參與行動|指引企業品牌行銷組合與傳播行動|
@@ -30,7 +30,7 @@ ex: Disney
 
 ### 延伸閱讀 
 David A. Aaker - [It Starts With a Brand Vision](https://www.prophet.com/thinking/2014/03/185-it-starts-with-a-brand-vision/) 
->>The brand essence represents a central theme of the brand vision – but it’s optional.
+>The brand essence represents a central theme of the brand vision – but it’s optional.
 
 
 
