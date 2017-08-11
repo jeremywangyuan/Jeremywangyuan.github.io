@@ -1,12 +1,35 @@
 ---
 layout:     post
-title:      讀書筆記--經理人
-date:       2017-08-11 20:30:00
-summary:    
-categories: note
+title:      MANAGER today - 
+date:       2017-08-11 23:00:00
+summary:    Brand vision
+categories: Study Note 
 thumbnail: book
 tags:
 ---
 
+品牌願景 Brand vision
+===
 
-# 
+## 定義 
+清晰地描述出品牌的遠大抱負, 以及品牌在消費者 員工和合作夥伴眼中所代表的意涵
+
+## 承先啟後 
+>上乘企業願景 下起品牌定位
+
+ex: Disney
+
+| | 企業願景 | 品牌願景 | 品牌定位 |
+|:------:|:------:|:-------:|:-----:|
+|定義|企業的發展藍圖, 描述**我們希望成為什麼樣的企業**|品牌的長期發展架構, 描述**企業對顧客的價值承諾**|企業或產品的獨到之處, 描述**品牌帶給顧客最具吸引力的特色**|
+|呈現形式|一段文字|一個架構(品牌精髓+價值)|一個口號|
+|主要任務|指引企業長期發展方向|讓企業更聚焦顧客所在意之價值, 並導引員工與合作夥伴的參與行動|指引企業品牌行銷組合與傳播行動|
+|溝通對象|董事會 股東 員工 合作夥伴為主|員工 合作夥伴為主|顧客為主|
+|Disney範例|`Ｍake People Happy`|`Family Magic`|`Magic Happen : Make the Dream Come True`|
+
+## 延伸閱讀 
+David A. Aaker - [It Starts With a Brand Vision](https://www.prophet.com/thinking/2014/03/185-it-starts-with-a-brand-vision/) 
+> The brand essence represents a central theme of the brand vision – but it’s optional.
+
+
+
