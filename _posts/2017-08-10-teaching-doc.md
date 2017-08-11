@@ -10,7 +10,7 @@ tags:
 
 
 # Jekyll + Github page = 個人靜態網頁 (on mac)
-
+---
 本篇將介紹如何利用 jekyll 和 github page 做出個人的的網站
 
 ### 1.Github Page 
