@@ -13,7 +13,7 @@ tags:
 
 本篇將介紹如何利用 jekyll 和 github page 做出個人的的網站
 
-## 1.Github Page 
+### 1.Github Page 
 [Github Page](https://pages.github.com/)透過github, 可以建立起個人的靜態網頁, 也將自己的網站託管在github上, 非常簡單方便
 
 1. 開啟或創立自己的[github](https://github.com/)帳號
@@ -21,7 +21,7 @@ tags:
 3. 按下專案上的 Set up in Desktop, 下載並安裝github desktop
 4. 即可將自己的網頁透過此上傳
 
-## 2.Jekyll 
+### 2.Jekyll 
 [jekyll](http://jekyll.com.cn/)使用者就可以用 Markdown 語法來寫文章, Jekyll 會自動將你的文章自動編譯為Jekyll 規範的 HTML 網頁
 
 #### 打開終端機, 安裝jekyll
