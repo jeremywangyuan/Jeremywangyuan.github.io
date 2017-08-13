@@ -25,7 +25,7 @@ ex: Disney
 |一段文字|一個架構|一個口號|
 |指引企業長期發展方向|聚焦顧客所在意之價值|指引企業品牌行銷組合與傳播行動|
 |董事會 股東 員工 合作夥伴|員工 合作夥伴|顧客|
-|`Ｍake People Happy`|`Family Magic`|`Magic Happen`|
+|`Make People Happy`|`Family Magic`|`Magic Happen`|
 
 ### 延伸閱讀 
 David A. Aaker - [It Starts With a Brand Vision](https://www.prophet.com/thinking/2014/03/185-it-starts-with-a-brand-vision/) 
