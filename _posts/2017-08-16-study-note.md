@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      AA 
+title:      AI和創意變革 
 date:       2017-08-16 23:00:00
-summary:    AA
+summary:    AI和創意變革
 categories: 數位時代 
 thumbnail: book
 tags:
