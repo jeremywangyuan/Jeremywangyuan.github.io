@@ -1,9 +1,9 @@
 ---
 layout:     post
-title:      Brand vision 
+title:      品牌願景Brand vision 
 date:       2017-08-11 23:00:00
-summary:    Brand vision
-categories: MANAGER-today 
+summary:    品牌願景Brand vision
+categories: 經理人MANAGER-today
 thumbnail: book
 tags:
 ---
