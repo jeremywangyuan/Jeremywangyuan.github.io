@@ -22,6 +22,13 @@ tags:
 ### 目標管理 1930-1960
 建立共同目的激勵員工
 給各級主管自主權, 用自己的方式管理團隊
+<div class="mermaid">
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</div>
 ```flow
 st=>start: start
 op=>operation: 1.檢視組織目標
