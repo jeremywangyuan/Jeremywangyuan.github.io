@@ -7,7 +7,9 @@ categories: 經理人MANAGER-today
 thumbnail: book
 tags:
 ---
-
+<link rel="stylesheet" href="mermaid.min.css">
+<script src="mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
 # 管理學10大經典理論
 ---
 
