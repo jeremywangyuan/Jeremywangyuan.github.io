@@ -28,19 +28,9 @@ graph TD;
     設定個人目標-->監督過程;
     監督過程-->評估;
     評估-->獎酬;
-    獎酬->檢視組織目標;
+    獎酬-->檢視組織目標;
 </div>
-```flow
-st=>start: start
-op=>operation: 1.檢視組織目標
-op2=>operation: 2.設定個人目標
-op3=>operation: 3.監督過程
-op4=>operation: 4.評估
-op5=>operation: 5.獎酬
 
-st->op->op2->op3->op4->op5->op
-
-```
 - Peter Drucker : **經理人** Ex: 3個石匠在砌牆, A:我在養家糊口 B:我是本鎮最厲害的石匠 C:我在建造一座大教堂, C是真正的經理人, 知道自己的終極目標
 
 ### X-Y理論 1930-1960
@@ -69,18 +59,15 @@ Y理論:人性本善, 工作目的包含自我實現
 
 ### 企業流程再造 1990-2000
 企業再造不是修補, 而是全面質疑 翻新
-```flow
-st=>start: start
-op=>operation: 1.制定願景和目標
-op2=>operation: 2.了解現有流程
-op3=>operation: 3.跳出傳統模式, 找出新流程的設計方向
-op4=>operation: 4.組織執行團隊, 實施新流程
-op5=>operation: 5.評估新流程運作成效
-op6=>operation: 6.持續不斷改善
 
-st->op->op2->op3->op4->op5->op6->op
-
-```
+<div class="mermaid">
+graph TD;
+    制定願景和目標-->了解現有流程;
+    了解現有流程-->跳出傳統模式, 找出新流程的設計方向;
+    跳出傳統模式, 找出新流程的設計方向-->組織執行團隊, 實施新流程;
+    組織執行團隊, 實施新流程-->評估新流程運作成效;
+    評估新流程運作成效-->持續不斷改善;
+</div>
 
 ### 核心競爭力 1990-2000
 創造能在未來存活的能力 比固守現在優勢更重要
@@ -96,32 +83,13 @@ st->op->op2->op3->op4->op5->op6->op
 2. 減少太過競爭的項目
 3. 提升有加值空間的服務
 4. 創造新體驗
-```flow
-st=>start: 檢查藍海
-op=>operation: 買方效益
-op2=>operation: 售價
-op3=>operation: 成本
-op4=>operation: 推行
-end=>end: 商業上可行的藍海構想
-cond=>condition: 業務構想具備獨到的買方效益嗎
-cond2=>condition: 定價讓人負擔得起嗎
-cond3=>condition: 能用策略定價達到目標成本賺錢嗎
-cond4=>condition: 落實業務構想會碰到哪些阻力
 
-st->op->cond
-cond(yes)->op2
-cond(no)->op
-op2->cond2
-cond2(yes)->op3
-cond2(no)->op2
-op3->cond3
-cond3(yes)->op4
-cond3(no)->op3
-op4->cond4
-cond4(yes)->end
-cond4(no)->op4
-
-```
+<div class="mermaid">
+graph TD;
+    買方效益-->售價;
+    售價-->成本;
+    成本-->推行;
+</div>
 
 ### 破壞式創新 2000-
 找到被忽視的產業區段 從邊緣走到主流市場
