@@ -90,6 +90,32 @@ graph TD;
     售價-->成本;
     成本-->推行;
 </div>
+```flow
+st=>start: 檢查藍海
+op=>operation: 買方效益
+op2=>operation: 售價
+op3=>operation: 成本
+op4=>operation: 推行
+end=>end: 商業上可行的藍海構想
+cond=>condition: 業務構想具備獨到的買方效益嗎
+cond2=>condition: 定價讓人負擔得起嗎
+cond3=>condition: 能用策略定價達到目標成本賺錢嗎
+cond4=>condition: 落實業務構想會碰到哪些阻力
+
+st->op->cond
+cond(yes)->op2
+cond(no)->op
+op2->cond2
+cond2(yes)->op3
+cond2(no)->op2
+op3->cond3
+cond3(yes)->op4
+cond3(no)->op3
+op4->cond4
+cond4(yes)->end
+cond4(no)->op4
+
+```
 
 ### 破壞式創新 2000-
 找到被忽視的產業區段 從邊緣走到主流市場
