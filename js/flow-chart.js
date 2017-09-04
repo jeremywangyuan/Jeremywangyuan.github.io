@@ -3,5 +3,1003 @@
 // Distributed under MIT license
 // http://adrai.github.io/flowchart.js
 
-!function(t,i){if("object"==typeof exports&&"object"==typeof module)module.exports=i(require("Raphael"));else if("function"==typeof define&&define.amd)define(["Raphael"],i);else{var e=i("object"==typeof exports?require("Raphael"):t.Raphael);for(var r in e)("object"==typeof exports?exports:t)[r]=e[r]}}(this,function(t){return function(t){function i(r){if(e[r])return e[r].exports;var s=e[r]={exports:{},id:r,loaded:!1};return t[r].call(s.exports,s,s.exports,i),s.loaded=!0,s.exports}var e={};return i.m=t,i.c=e,i.p="",i(0)}([function(t,i,e){e(8);var r=e(4);e(14);var s={parse:r};"undefined"!=typeof window&&(window.flowchart=s),t.exports=s},function(t,i){function e(t,i){if(!t||"function"==typeof t)return i;var r={};for(var s in i)r[s]=i[s];for(s in t)t[s]&&("object"==typeof r[s]?r[s]=e(r[s],t[s]):r[s]=t[s]);return r}function r(t,i){if("function"==typeof Object.create)t.super_=i,t.prototype=Object.create(i.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}});else{t.super_=i;var e=function(){};e.prototype=i.prototype,t.prototype=new e,t.prototype.constructor=t}}t.exports={defaults:e,inherits:r}},function(t,i,e){function r(t,i,e){this.chart=t,this.group=this.chart.paper.set(),this.symbol=e,this.connectedTo=[],this.symbolType=i.symbolType,this.flowstate=i.flowstate||"future",this.lineStyle=i.lineStyle||{},this.key=i.key||"",this.next_direction=i.next&&i.direction_next?i.direction_next:void 0,this.text=this.chart.paper.text(0,0,i.text),i.key&&(this.text.node.id=i.key+"t"),this.text.node.setAttribute("class",this.getAttr("class")+"t"),this.text.attr({"text-anchor":"start",x:this.getAttr("text-margin"),fill:this.getAttr("font-color"),"font-size":this.getAttr("font-size")});var r=this.getAttr("font"),s=this.getAttr("font-family"),n=this.getAttr("font-weight");r&&this.text.attr({font:r}),s&&this.text.attr({"font-family":s}),n&&this.text.attr({"font-weight":n}),i.link&&this.text.attr("href",i.link),i.target&&this.text.attr("target",i.target);var o=this.getAttr("maxWidth");if(o){for(var h=i.text.split(" "),a="",x=0,l=h.length;l>x;x++){var y=h[x];this.text.attr("text",a+" "+y),a+=this.text.getBBox().width>o?"\n"+y:" "+y}this.text.attr("text",a.substring(1))}if(this.group.push(this.text),e){var g=this.getAttr("text-margin");e.attr({fill:this.getAttr("fill"),stroke:this.getAttr("element-color"),"stroke-width":this.getAttr("line-width"),width:this.text.getBBox().width+2*g,height:this.text.getBBox().height+2*g}),e.node.setAttribute("class",this.getAttr("class")),i.link&&e.attr("href",i.link),i.target&&e.attr("target",i.target),i.key&&(e.node.id=i.key),this.group.push(e),e.insertBefore(this.text),this.text.attr({y:e.getBBox().height/2}),this.initialize()}}var s=e(3),n=s.drawLine,o=s.checkLineIntersection;r.prototype.getAttr=function(t){if(this.chart){var i,e=this.chart.options?this.chart.options[t]:void 0,r=this.chart.options.symbols?this.chart.options.symbols[this.symbolType][t]:void 0;return this.chart.options.flowstate&&this.chart.options.flowstate[this.flowstate]&&(i=this.chart.options.flowstate[this.flowstate][t]),i||r||e}},r.prototype.initialize=function(){this.group.transform("t"+this.getAttr("line-width")+","+this.getAttr("line-width")),this.width=this.group.getBBox().width,this.height=this.group.getBBox().height},r.prototype.getCenter=function(){return{x:this.getX()+this.width/2,y:this.getY()+this.height/2}},r.prototype.getX=function(){return this.group.getBBox().x},r.prototype.getY=function(){return this.group.getBBox().y},r.prototype.shiftX=function(t){this.group.transform("t"+(this.getX()+t)+","+this.getY())},r.prototype.setX=function(t){this.group.transform("t"+t+","+this.getY())},r.prototype.shiftY=function(t){this.group.transform("t"+this.getX()+","+(this.getY()+t))},r.prototype.setY=function(t){this.group.transform("t"+this.getX()+","+t)},r.prototype.getTop=function(){var t=this.getY(),i=this.getX()+this.width/2;return{x:i,y:t}},r.prototype.getBottom=function(){var t=this.getY()+this.height,i=this.getX()+this.width/2;return{x:i,y:t}},r.prototype.getLeft=function(){var t=this.getY()+this.group.getBBox().height/2,i=this.getX();return{x:i,y:t}},r.prototype.getRight=function(){var t=this.getY()+this.group.getBBox().height/2,i=this.getX()+this.group.getBBox().width;return{x:i,y:t}},r.prototype.render=function(){if(this.next){var t=this.getAttr("line-length");if("right"===this.next_direction){var i=this.getRight();if(!this.next.isPositioned){this.next.setY(i.y-this.next.height/2),this.next.shiftX(this.group.getBBox().x+this.width+t);var e=this;!function s(){for(var i,r=!1,n=0,o=e.chart.symbols.length;o>n;n++){i=e.chart.symbols[n];var h=Math.abs(i.getCenter().x-e.next.getCenter().x);if(i.getCenter().y>e.next.getCenter().y&&h<=e.next.width/2){r=!0;break}}r&&(e.next.setX(i.getX()+i.width+t),s())}(),this.next.isPositioned=!0,this.next.render()}}else{var r=this.getBottom();this.next.isPositioned||(this.next.shiftY(this.getY()+this.height+t),this.next.setX(r.x-this.next.width/2),this.next.isPositioned=!0,this.next.render())}}},r.prototype.renderLines=function(){this.next&&(this.next_direction?this.drawLineTo(this.next,"",this.next_direction):this.drawLineTo(this.next))},r.prototype.drawLineTo=function(t,i,e){this.connectedTo.indexOf(t)<0&&this.connectedTo.push(t);var r,s=this.getCenter().x,h=this.getCenter().y,a=this.getRight(),x=this.getBottom(),l=this.getLeft(),y=t.getCenter().x,g=t.getCenter().y,f=t.getTop(),p=t.getRight(),c=t.getLeft(),u=s===y,d=h===g,m=g>h,b=h>g||this===t,v=s>y,w=y>s,k=0,_=this.getAttr("line-length"),B=this.getAttr("line-width");if(e&&"bottom"!==e||!u||!m)if(e&&"right"!==e||!d||!w)if(e&&"left"!==e||!d||!v)if(e&&"right"!==e||!u||!b)if(e&&"right"!==e||!u||!m)if(e&&"bottom"!==e||!v)if(e&&"bottom"!==e||!w)if(e&&"right"===e&&v)r=n(this.chart,a,[{x:a.x+_/2,y:a.y},{x:a.x+_/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.rightStart=!0,t.topEnd=!0,k=a.x+_/2;else if(e&&"right"===e&&w)r=n(this.chart,a,[{x:f.x,y:a.y},{x:f.x,y:f.y}],i),this.rightStart=!0,t.topEnd=!0,k=a.x+_/2;else if(e&&"bottom"===e&&u&&b)r=n(this.chart,x,[{x:x.x,y:x.y+_/2},{x:a.x+_/2,y:x.y+_/2},{x:a.x+_/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.bottomStart=!0,t.topEnd=!0,k=x.x+_/2;else if("left"===e&&u&&b){var A=l.x-_/2;c.x<l.x&&(A=c.x-_/2),r=n(this.chart,l,[{x:A,y:l.y},{x:A,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.leftStart=!0,t.topEnd=!0,k=l.x}else"left"===e&&(r=n(this.chart,l,[{x:f.x+(l.x-f.x)/2,y:l.y},{x:f.x+(l.x-f.x)/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.leftStart=!0,t.topEnd=!0,k=l.x);else r=n(this.chart,x,[{x:x.x,y:x.y+_/2},{x:x.x+(x.x-f.x)/2,y:x.y+_/2},{x:x.x+(x.x-f.x)/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.bottomStart=!0,t.topEnd=!0,k=x.x+(x.x-f.x)/2;else r=this.leftEnd&&b?n(this.chart,x,[{x:x.x,y:x.y+_/2},{x:x.x+(x.x-f.x)/2,y:x.y+_/2},{x:x.x+(x.x-f.x)/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i):n(this.chart,x,[{x:x.x,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.bottomStart=!0,t.topEnd=!0,k=x.x+(x.x-f.x)/2;else r=n(this.chart,a,[{x:a.x+_/2,y:a.y},{x:a.x+_/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.rightStart=!0,t.topEnd=!0,k=a.x+_/2;else r=n(this.chart,a,[{x:a.x+_/2,y:a.y},{x:a.x+_/2,y:f.y-_/2},{x:f.x,y:f.y-_/2},{x:f.x,y:f.y}],i),this.rightStart=!0,t.topEnd=!0,k=a.x+_/2;else r=n(this.chart,l,p,i),this.leftStart=!0,t.rightEnd=!0,k=p.x;else r=n(this.chart,a,c,i),this.rightStart=!0,t.leftEnd=!0,k=c.x;else r=n(this.chart,x,f,i),this.bottomStart=!0,t.topEnd=!0,k=x.x;if(this.lineStyle[t.key]&&r&&r.attr(this.lineStyle[t.key]),r){for(var O=0,L=this.chart.lines.length;L>O;O++)for(var M,X=this.chart.lines[O],S=X.attr("path"),T=r.attr("path"),Y=0,C=S.length-1;C>Y;Y++){var j=[];j.push(["M",S[Y][1],S[Y][2]]),j.push(["L",S[Y+1][1],S[Y+1][2]]);for(var E=j[0][1],z=j[0][2],P=j[1][1],R=j[1][2],F=0,I=T.length-1;I>F;F++){var N=[];N.push(["M",T[F][1],T[F][2]]),N.push(["L",T[F+1][1],T[F+1][2]]);var W=N[0][1],V=N[0][2],q=N[1][1],G=N[1][2],Q=o(E,z,P,R,W,V,q,G);if(Q.onLine1&&Q.onLine2){var J;V===G?W>q?(J=["L",Q.x+2*B,V],T.splice(F+1,0,J),J=["C",Q.x+2*B,V,Q.x,V-4*B,Q.x-2*B,V],T.splice(F+2,0,J),r.attr("path",T)):(J=["L",Q.x-2*B,V],T.splice(F+1,0,J),J=["C",Q.x-2*B,V,Q.x,V-4*B,Q.x+2*B,V],T.splice(F+2,0,J),r.attr("path",T)):V>G?(J=["L",W,Q.y+2*B],T.splice(F+1,0,J),J=["C",W,Q.y+2*B,W+4*B,Q.y,W,Q.y-2*B],T.splice(F+2,0,J),r.attr("path",T)):(J=["L",W,Q.y-2*B],T.splice(F+1,0,J),J=["C",W,Q.y-2*B,W+4*B,Q.y,W,Q.y+2*B],T.splice(F+2,0,J),r.attr("path",T)),F+=2,M+=2}}}this.chart.lines.push(r)}(!this.chart.maxXFromLine||this.chart.maxXFromLine&&k>this.chart.maxXFromLine)&&(this.chart.maxXFromLine=k)},t.exports=r},function(t,i){function e(t,i,e){var r,s,n="M{0},{1}";for(r=2,s=2*e.length+2;s>r;r+=2)n+=" L{"+r+"},{"+(r+1)+"}";var o=[i.x,i.y];for(r=0,s=e.length;s>r;r++)o.push(e[r].x),o.push(e[r].y);var h=t.paper.path(n,o);h.attr("stroke",t.options["element-color"]),h.attr("stroke-width",t.options["line-width"]);var a=t.options.font,x=t.options["font-family"],l=t.options["font-weight"];return a&&h.attr({font:a}),x&&h.attr({"font-family":x}),l&&h.attr({"font-weight":l}),h}function r(t,i,e,r){var s,n;"[object Array]"!==Object.prototype.toString.call(e)&&(e=[e]);var o="M{0},{1}";for(s=2,n=2*e.length+2;n>s;s+=2)o+=" L{"+s+"},{"+(s+1)+"}";var h=[i.x,i.y];for(s=0,n=e.length;n>s;s++)h.push(e[s].x),h.push(e[s].y);var a=t.paper.path(o,h);a.attr({stroke:t.options["line-color"],"stroke-width":t.options["line-width"],"arrow-end":t.options["arrow-end"]});var x=t.options.font,l=t.options["font-family"],y=t.options["font-weight"];if(x&&a.attr({font:x}),l&&a.attr({"font-family":l}),y&&a.attr({"font-weight":y}),r){var g=!1,f=t.paper.text(0,0,r),p=!1,c=e[0];i.y===c.y&&(p=!0);var u=0,d=0;g?(u=i.x>c.x?i.x-(i.x-c.x)/2:c.x-(c.x-i.x)/2,d=i.y>c.y?i.y-(i.y-c.y)/2:c.y-(c.y-i.y)/2,p?(u-=f.getBBox().width/2,d-=t.options["text-margin"]):(u+=t.options["text-margin"],d-=f.getBBox().height/2)):(u=i.x,d=i.y,p?(u+=t.options["text-margin"]/2,d-=t.options["text-margin"]):(u+=t.options["text-margin"]/2,d+=t.options["text-margin"])),f.attr({"text-anchor":"start","font-size":t.options["font-size"],fill:t.options["font-color"],x:u,y:d}),x&&f.attr({font:x}),l&&f.attr({"font-family":l}),y&&f.attr({"font-weight":y})}return a}function s(t,i,e,r,s,n,o,h){var a,x,l,y,g,f={x:null,y:null,onLine1:!1,onLine2:!1};return a=(h-n)*(e-t)-(o-s)*(r-i),0===a?f:(x=i-n,l=t-s,y=(o-s)*x-(h-n)*l,g=(e-t)*x-(r-i)*l,x=y/a,l=g/a,f.x=t+x*(e-t),f.y=i+x*(r-i),x>0&&1>x&&(f.onLine1=!0),l>0&&1>l&&(f.onLine2=!0),f)}t.exports={drawPath:e,drawLine:r,checkLineIntersection:s}},function(t,i,e){function r(t){function i(t){var i=t.indexOf("(")+1,e=t.indexOf(")");return i>=0&&e>=0?t.substring(i,e):"{}"}function e(t){var i=t.indexOf("(")+1,e=t.indexOf(")");return i>=0&&e>=0?y.symbols[t.substring(0,i-1)]:y.symbols[t]}function r(t){var i="next",e=t.indexOf("(")+1,r=t.indexOf(")");return e>=0&&r>=0&&(i=C.substring(e,r),i.indexOf(",")<0&&"yes"!==i&&"no"!==i&&(i="next, "+i)),i}t=t||"",t=t.trim();for(var y={symbols:{},start:null,drawSVG:function(t,i){function e(t){if(g[t.key])return g[t.key];switch(t.symbolType){case"start":g[t.key]=new n(y,t);break;case"end":g[t.key]=new o(y,t);break;case"operation":g[t.key]=new h(y,t);break;case"inputoutput":g[t.key]=new a(y,t);break;case"subroutine":g[t.key]=new x(y,t);break;case"condition":g[t.key]=new l(y,t);break;default:return new Error("Wrong symbol type!")}return g[t.key]}var r=this;this.diagram&&this.diagram.clean();var y=new s(t,i);this.diagram=y;var g={};!function f(t,i,s){var n=e(t);return r.start===t?y.startWith(n):i&&s&&!i.pathOk&&(i instanceof l?(s.yes===t&&i.yes(n),s.no===t&&i.no(n)):i.then(n)),n.pathOk?n:(n instanceof l?(t.yes&&f(t.yes,n,t),t.no&&f(t.no,n,t)):t.next&&f(t.next,n,t),n)}(this.start),y.render()},clean:function(){this.diagram.clean()}},g=[],f=0,p=1,c=t.length;c>p;p++)if("\n"===t[p]&&"\\"!==t[p-1]){var u=t.substring(f,p);f=p+1,g.push(u.replace(/\\\n/g,"\n"))}f<t.length&&g.push(t.substr(f));for(var d=1,m=g.length;m>d;){var b=g[d];b.indexOf("->")<0&&b.indexOf("=>")<0&&b.indexOf("@>")<0?(g[d-1]+="\n"+b,g.splice(d,1),m--):d++}for(;g.length>0;){var v=g.splice(0,1)[0].trim();if(v.indexOf("=>")>=0){var w=v.split("=>"),k={key:w[0].replace(/\(.*\)/,""),symbolType:w[1],text:null,link:null,target:null,flowstate:null,lineStyle:{},params:{}},_=w[0].match(/\((.*)\)/);if(_&&_.length>1)for(var B=_[1].split(","),A=0;A<B.length;A++){var O=B[0].split("=");2==O.length&&(k.params[O[0]]=O[1])}var L;if(k.symbolType.indexOf(": ")>=0&&(L=k.symbolType.split(": "),k.symbolType=L.shift(),k.text=L.join(": ")),k.text&&k.text.indexOf(":>")>=0?(L=k.text.split(":>"),k.text=L.shift(),k.link=L.join(":>")):k.symbolType.indexOf(":>")>=0&&(L=k.symbolType.split(":>"),k.symbolType=L.shift(),k.link=L.join(":>")),k.symbolType.indexOf("\n")>=0&&(k.symbolType=k.symbolType.split("\n")[0]),k.link){var M=k.link.indexOf("[")+1,X=k.link.indexOf("]");M>=0&&X>=0&&(k.target=k.link.substring(M,X),k.link=k.link.substring(0,M-1))}if(k.text&&k.text.indexOf("|")>=0){var S=k.text.split("|");k.flowstate=S.pop().trim(),k.text=S.join("|")}y.symbols[k.key]=k}else if(v.indexOf("->")>=0)for(var T=v.split("->"),A=0,Y=T.length;Y>A;A++){var C=T[A],j=e(C),E=r(C),z=null;if(E.indexOf(",")>=0){var P=E.split(",");E=P[0],z=P[1].trim()}if(y.start||(y.start=j),Y>A+1){var R=T[A+1];j[E]=e(R),j["direction_"+E]=z,z=null}}else if(v.indexOf("@>")>=0)for(var F=v.split("@>"),A=0,Y=F.length;Y>A;A++)if(A+1!=Y){var I=e(F[A]),R=e(F[A+1]);I.lineStyle[R.key]=JSON.parse(i(F[A+1]))}}return y}var s=e(6),n=e(12),o=e(9),h=e(11),a=e(10),x=e(13),l=e(5);t.exports=r},function(t,i,e){function r(t,i){i=i||{},s.call(this,t,i),this.textMargin=this.getAttr("text-margin"),this.yes_direction="bottom",this.no_direction="right",this.params=i.params,i.yes&&i.direction_yes&&i.no&&!i.direction_no?"right"===i.direction_yes?(this.no_direction="bottom",this.yes_direction="right"):(this.no_direction="right",this.yes_direction="bottom"):i.yes&&!i.direction_yes&&i.no&&i.direction_no?"right"===i.direction_no?(this.yes_direction="bottom",this.no_direction="right"):(this.yes_direction="right",this.no_direction="bottom"):(this.yes_direction="bottom",this.no_direction="right"),this.yes_direction=this.yes_direction||"bottom",this.no_direction=this.no_direction||"right",this.text.attr({x:2*this.textMargin});var e=this.text.getBBox().width+3*this.textMargin;e+=e/2;var r=this.text.getBBox().height+2*this.textMargin;r+=r/2,r=Math.max(.5*e,r);var n=e/4,o=r/4;this.text.attr({x:n+this.textMargin/2});var a={x:n,y:o},x=[{x:n-e/4,y:o+r/4},{x:n-e/4+e/2,y:o+r/4+r/2},{x:n-e/4+e,y:o+r/4},{x:n-e/4+e/2,y:o+r/4-r/2},{x:n-e/4,y:o+r/4}],l=h(t,a,x);l.attr({stroke:this.getAttr("element-color"),"stroke-width":this.getAttr("line-width"),fill:this.getAttr("fill")}),i.link&&l.attr("href",i.link),i.target&&l.attr("target",i.target),i.key&&(l.node.id=i.key),l.node.setAttribute("class",this.getAttr("class")),this.text.attr({y:l.getBBox().height/2}),this.group.push(l),l.insertBefore(this.text),this.initialize()}var s=e(2),n=e(1).inherits,o=e(3),h=o.drawPath;n(r,s),r.prototype.render=function(){this.yes_direction&&(this[this.yes_direction+"_symbol"]=this.yes_symbol),this.no_direction&&(this[this.no_direction+"_symbol"]=this.no_symbol);var t=this.getAttr("line-length");if(this.bottom_symbol){var i=this.getBottom();this.bottom_symbol.isPositioned||(this.bottom_symbol.shiftY(this.getY()+this.height+t),this.bottom_symbol.setX(i.x-this.bottom_symbol.width/2),this.bottom_symbol.isPositioned=!0,this.bottom_symbol.render())}if(this.right_symbol){var e=this.getRight();if(!this.right_symbol.isPositioned){this.right_symbol.setY(e.y-this.right_symbol.height/2),this.right_symbol.shiftX(this.group.getBBox().x+this.width+t);var r=this;!function s(){for(var i,e=!1,n=0,o=r.chart.symbols.length;o>n;n++)if(i=r.chart.symbols[n],!r.params["align-next"]||"no"!==r.params["align-next"]){var h=Math.abs(i.getCenter().x-r.right_symbol.getCenter().x);if(i.getCenter().y>r.right_symbol.getCenter().y&&h<=r.right_symbol.width/2){e=!0;break}}e&&(r.right_symbol.setX(i.getX()+i.width+t),s())}(),this.right_symbol.isPositioned=!0,this.right_symbol.render()}}},r.prototype.renderLines=function(){this.yes_symbol&&this.drawLineTo(this.yes_symbol,this.getAttr("yes-text"),this.yes_direction),this.no_symbol&&this.drawLineTo(this.no_symbol,this.getAttr("no-text"),this.no_direction)},t.exports=r},function(t,i,e){function r(t,i){i=i||{},this.paper=new s(t),this.options=n(i,o),this.symbols=[],this.lines=[],this.start=null}var s=e(15),n=e(1).defaults,o=e(7),h=e(5);r.prototype.handle=function(t){this.symbols.indexOf(t)<=-1&&this.symbols.push(t);var i=this;return t instanceof h?(t.yes=function(e){return t.yes_symbol=e,t.no_symbol&&(t.pathOk=!0),i.handle(e)},t.no=function(e){return t.no_symbol=e,t.yes_symbol&&(t.pathOk=!0),i.handle(e)}):t.then=function(e){return t.next=e,t.pathOk=!0,i.handle(e)},t},r.prototype.startWith=function(t){return this.start=t,this.handle(t)},r.prototype.render=function(){var t,i,e=0,r=0,s=0,n=0,o=0,h=0,a=0,x=0;for(s=0,n=this.symbols.length;n>s;s++)t=this.symbols[s],t.width>e&&(e=t.width),t.height>r&&(r=t.height);for(s=0,n=this.symbols.length;n>s;s++)t=this.symbols[s],t.shiftX(this.options.x+(e-t.width)/2+this.options["line-width"]),t.shiftY(this.options.y+(r-t.height)/2+this.options["line-width"]);for(this.start.render(),s=0,n=this.symbols.length;n>s;s++)t=this.symbols[s],t.renderLines();o=this.maxXFromLine;var l,y;for(s=0,n=this.symbols.length;n>s;s++)t=this.symbols[s],l=t.getX()+t.width,y=t.getY()+t.height,l>o&&(o=l),y>h&&(h=y);for(s=0,n=this.lines.length;n>s;s++){i=this.lines[s].getBBox(),l=i.x,y=i.y;var g=i.x2,f=i.y2;a>l&&(a=l),x>y&&(x=y),g>o&&(o=g),f>h&&(h=f)}var p=this.options.scale,c=this.options["line-width"];0>a&&(a-=c),0>x&&(x-=c);var u=o+c-a,d=h+c-x;this.paper.setSize(u*p,d*p),this.paper.setViewBox(a,x,u,d,!0)},r.prototype.clean=function(){if(this.paper){var t=this.paper.canvas;t.parentNode.removeChild(t)}},t.exports=r},function(t,i){t.exports={x:0,y:0,"line-width":3,"line-length":50,"text-margin":10,"font-size":14,"font-color":"black","line-color":"black","element-color":"black",fill:"white","yes-text":"yes","no-text":"no","arrow-end":"block","class":"flowchart",scale:1,symbols:{start:{},end:{},condition:{},inputoutput:{},operation:{},subroutine:{}}}},function(t,i){Array.prototype.indexOf||(Array.prototype.indexOf=function(t){"use strict";if(null===this)throw new TypeError;var i=Object(this),e=i.length>>>0;if(0===e)return-1;var r=0;if(arguments.length>0&&(r=Number(arguments[1]),r!=r?r=0:0!==r&&r!=1/0&&r!=-(1/0)&&(r=(r>0||-1)*Math.floor(Math.abs(r)))),r>=e)return-1;for(var s=r>=0?r:Math.max(e-Math.abs(r),0);e>s;s++)if(s in i&&i[s]===t)return s;return-1}),Array.prototype.lastIndexOf||(Array.prototype.lastIndexOf=function(t){"use strict";if(null===this)throw new TypeError;var i=Object(this),e=i.length>>>0;if(0===e)return-1;var r=e;arguments.length>1&&(r=Number(arguments[1]),r!=r?r=0:0!==r&&r!=1/0&&r!=-(1/0)&&(r=(r>0||-1)*Math.floor(Math.abs(r))));for(var s=r>=0?Math.min(r,e-1):e-Math.abs(r);s>=0;s--)if(s in i&&i[s]===t)return s;return-1}),String.prototype.trim||(String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g,"")})},function(t,i,e){function r(t,i){var e=t.paper.rect(0,0,0,0,20);i=i||{},i.text=i.text||"End",s.call(this,t,i,e)}var s=e(2),n=e(1).inherits;n(r,s),t.exports=r},function(t,i,e){function r(t,i){i=i||{},s.call(this,t,i),this.textMargin=this.getAttr("text-margin"),this.text.attr({x:3*this.textMargin});var e=this.text.getBBox().width+4*this.textMargin,r=this.text.getBBox().height+2*this.textMargin,n=this.textMargin,o=r/2,a={x:n,y:o},x=[{x:n-this.textMargin,y:r},{x:n-this.textMargin+e,y:r},{x:n-this.textMargin+e+2*this.textMargin,y:0},{x:n-this.textMargin+2*this.textMargin,y:0},{x:n,y:o}],l=h(t,a,x);l.attr({stroke:this.getAttr("element-color"),"stroke-width":this.getAttr("line-width"),fill:this.getAttr("fill")}),i.link&&l.attr("href",i.link),i.target&&l.attr("target",i.target),i.key&&(l.node.id=i.key),l.node.setAttribute("class",this.getAttr("class")),this.text.attr({y:l.getBBox().height/2}),this.group.push(l),l.insertBefore(this.text),this.initialize()}var s=e(2),n=e(1).inherits,o=e(3),h=o.drawPath;n(r,s),r.prototype.getLeft=function(){var t=this.getY()+this.group.getBBox().height/2,i=this.getX()+this.textMargin;return{x:i,y:t}},r.prototype.getRight=function(){var t=this.getY()+this.group.getBBox().height/2,i=this.getX()+this.group.getBBox().width-this.textMargin;return{x:i,y:t}},t.exports=r},function(t,i,e){function r(t,i){var e=t.paper.rect(0,0,0,0);i=i||{},s.call(this,t,i,e)}var s=e(2),n=e(1).inherits;n(r,s),t.exports=r},function(t,i,e){function r(t,i){var e=t.paper.rect(0,0,0,0,20);i=i||{},i.text=i.text||"Start",s.call(this,t,i,e)}var s=e(2),n=e(1).inherits;n(r,s),t.exports=r},function(t,i,e){function r(t,i){var e=t.paper.rect(0,0,0,0);i=i||{},s.call(this,t,i,e),e.attr({width:this.text.getBBox().width+4*this.getAttr("text-margin")}),this.text.attr({x:2*this.getAttr("text-margin")});var r=t.paper.rect(0,0,0,0);r.attr({x:this.getAttr("text-margin"),stroke:this.getAttr("element-color"),"stroke-width":this.getAttr("line-width"),width:this.text.getBBox().width+2*this.getAttr("text-margin"),height:this.text.getBBox().height+2*this.getAttr("text-margin"),fill:this.getAttr("fill")}),i.key&&(r.node.id=i.key+"i");var n=this.getAttr("font"),o=this.getAttr("font-family"),h=this.getAttr("font-weight");n&&r.attr({font:n}),o&&r.attr({"font-family":o}),h&&r.attr({"font-weight":h}),i.link&&r.attr("href",i.link),i.target&&r.attr("target",i.target),this.group.push(r),r.insertBefore(this.text),this.initialize()}var s=e(2),n=e(1).inherits;n(r,s),t.exports=r},function(t,i,e){if("undefined"!=typeof jQuery){var r=e(4);!function(t){t.fn.flowChart=function(i){return this.each(function(){var e=t(this),s=r(e.text());e.html(""),s.drawSVG(this,i)})}}(jQuery)}},function(i,e){i.exports=t}])});
-//# sourceMappingURL=flowchart.min.js.map
+!function(root, factory) {
+    if ("object" == typeof exports && "object" == typeof module) module.exports = factory(require("Raphael")); else if ("function" == typeof define && define.amd) define([ "Raphael" ], factory); else {
+        var a = factory("object" == typeof exports ? require("Raphael") : root.Raphael);
+        for (var i in a) ("object" == typeof exports ? exports : root)[i] = a[i];
+    }
+}(this, function(__WEBPACK_EXTERNAL_MODULE_15__) {
+    /******/
+    return function(modules) {
+        /******/
+        /******/
+        // The require function
+        /******/
+        function __webpack_require__(moduleId) {
+            /******/
+            /******/
+            // Check if module is in cache
+            /******/
+            if (installedModules[moduleId]) /******/
+            return installedModules[moduleId].exports;
+            /******/
+            /******/
+            // Create a new module (and put it into the cache)
+            /******/
+            var module = installedModules[moduleId] = {
+                /******/
+                exports: {},
+                /******/
+                id: moduleId,
+                /******/
+                loaded: !1
+            };
+            /******/
+            /******/
+            // Return the exports of the module
+            /******/
+            /******/
+            /******/
+            // Execute the module function
+            /******/
+            /******/
+            /******/
+            // Flag the module as loaded
+            /******/
+            return modules[moduleId].call(module.exports, module, module.exports, __webpack_require__), 
+            module.loaded = !0, module.exports;
+        }
+        // webpackBootstrap
+        /******/
+        // The module cache
+        /******/
+        var installedModules = {};
+        /******/
+        /******/
+        // Load entry module and return exports
+        /******/
+        /******/
+        /******/
+        /******/
+        // expose the modules object (__webpack_modules__)
+        /******/
+        /******/
+        /******/
+        // expose the module cache
+        /******/
+        /******/
+        /******/
+        // __webpack_public_path__
+        /******/
+        return __webpack_require__.m = modules, __webpack_require__.c = installedModules, 
+        __webpack_require__.p = "", __webpack_require__(0);
+    }([ /* 0 */
+    /*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        __webpack_require__(/*! ./src/flowchart.shim */ 8);
+        var parse = __webpack_require__(/*! ./src/flowchart.parse */ 4);
+        __webpack_require__(/*! ./src/jquery-plugin */ 14);
+        var FlowChart = {
+            parse: parse
+        };
+        "undefined" != typeof window && (window.flowchart = FlowChart), module.exports = FlowChart;
+    }, /* 1 */
+    /*!**********************************!*\
+  !*** ./src/flowchart.helpers.js ***!
+  \**********************************/
+    /***/
+    function(module, exports) {
+        function _defaults(options, defaultOptions) {
+            if (!options || "function" == typeof options) return defaultOptions;
+            var merged = {};
+            for (var attrname in defaultOptions) merged[attrname] = defaultOptions[attrname];
+            for (attrname in options) options[attrname] && ("object" == typeof merged[attrname] ? merged[attrname] = _defaults(merged[attrname], options[attrname]) : merged[attrname] = options[attrname]);
+            return merged;
+        }
+        function _inherits(ctor, superCtor) {
+            if ("function" == typeof Object.create) // implementation from standard node.js 'util' module
+            ctor.super_ = superCtor, ctor.prototype = Object.create(superCtor.prototype, {
+                constructor: {
+                    value: ctor,
+                    enumerable: !1,
+                    writable: !0,
+                    configurable: !0
+                }
+            }); else {
+                // old school shim for old browsers
+                ctor.super_ = superCtor;
+                var TempCtor = function() {};
+                TempCtor.prototype = superCtor.prototype, ctor.prototype = new TempCtor(), ctor.prototype.constructor = ctor;
+            }
+        }
+        // move dependent functions to a container so that
+        // they can be overriden easier in no jquery environment (node.js)
+        module.exports = {
+            defaults: _defaults,
+            inherits: _inherits
+        };
+    }, /* 2 */
+    /*!*********************************!*\
+  !*** ./src/flowchart.symbol.js ***!
+  \*********************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function Symbol(chart, options, symbol) {
+            this.chart = chart, this.group = this.chart.paper.set(), this.symbol = symbol, this.connectedTo = [], 
+            this.symbolType = options.symbolType, this.flowstate = options.flowstate || "future", 
+            this.lineStyle = options.lineStyle || {}, this.key = options.key || "", this.next_direction = options.next && options.direction_next ? options.direction_next : void 0, 
+            this.text = this.chart.paper.text(0, 0, options.text), //Raphael does not support the svg group tag so setting the text node id to the symbol node id plus t
+            options.key && (this.text.node.id = options.key + "t"), this.text.node.setAttribute("class", this.getAttr("class") + "t"), 
+            this.text.attr({
+                "text-anchor": "start",
+                x: this.getAttr("text-margin"),
+                fill: this.getAttr("font-color"),
+                "font-size": this.getAttr("font-size")
+            });
+            var font = this.getAttr("font"), fontF = this.getAttr("font-family"), fontW = this.getAttr("font-weight");
+            font && this.text.attr({
+                font: font
+            }), fontF && this.text.attr({
+                "font-family": fontF
+            }), fontW && this.text.attr({
+                "font-weight": fontW
+            }), options.link && this.text.attr("href", options.link), options.target && this.text.attr("target", options.target);
+            var maxWidth = this.getAttr("maxWidth");
+            if (maxWidth) {
+                for (var words = options.text.split(" "), tempText = "", i = 0, ii = words.length; ii > i; i++) {
+                    var word = words[i];
+                    this.text.attr("text", tempText + " " + word), tempText += this.text.getBBox().width > maxWidth ? "\n" + word : " " + word;
+                }
+                this.text.attr("text", tempText.substring(1));
+            }
+            if (this.group.push(this.text), symbol) {
+                var tmpMargin = this.getAttr("text-margin");
+                symbol.attr({
+                    fill: this.getAttr("fill"),
+                    stroke: this.getAttr("element-color"),
+                    "stroke-width": this.getAttr("line-width"),
+                    width: this.text.getBBox().width + 2 * tmpMargin,
+                    height: this.text.getBBox().height + 2 * tmpMargin
+                }), symbol.node.setAttribute("class", this.getAttr("class")), options.link && symbol.attr("href", options.link), 
+                options.target && symbol.attr("target", options.target), options.key && (symbol.node.id = options.key), 
+                this.group.push(symbol), symbol.insertBefore(this.text), this.text.attr({
+                    y: symbol.getBBox().height / 2
+                }), this.initialize();
+            }
+        }
+        var drawAPI = __webpack_require__(/*! ./flowchart.functions */ 3), drawLine = drawAPI.drawLine, checkLineIntersection = drawAPI.checkLineIntersection;
+        /* Gets the attribute based on Flowstate, Symbol-Name and default, first found wins */
+        Symbol.prototype.getAttr = function(attName) {
+            if (this.chart) {
+                var opt1, opt3 = this.chart.options ? this.chart.options[attName] : void 0, opt2 = this.chart.options.symbols ? this.chart.options.symbols[this.symbolType][attName] : void 0;
+                return this.chart.options.flowstate && this.chart.options.flowstate[this.flowstate] && (opt1 = this.chart.options.flowstate[this.flowstate][attName]), 
+                opt1 || opt2 || opt3;
+            }
+        }, Symbol.prototype.initialize = function() {
+            this.group.transform("t" + this.getAttr("line-width") + "," + this.getAttr("line-width")), 
+            this.width = this.group.getBBox().width, this.height = this.group.getBBox().height;
+        }, Symbol.prototype.getCenter = function() {
+            return {
+                x: this.getX() + this.width / 2,
+                y: this.getY() + this.height / 2
+            };
+        }, Symbol.prototype.getX = function() {
+            return this.group.getBBox().x;
+        }, Symbol.prototype.getY = function() {
+            return this.group.getBBox().y;
+        }, Symbol.prototype.shiftX = function(x) {
+            this.group.transform("t" + (this.getX() + x) + "," + this.getY());
+        }, Symbol.prototype.setX = function(x) {
+            this.group.transform("t" + x + "," + this.getY());
+        }, Symbol.prototype.shiftY = function(y) {
+            this.group.transform("t" + this.getX() + "," + (this.getY() + y));
+        }, Symbol.prototype.setY = function(y) {
+            this.group.transform("t" + this.getX() + "," + y);
+        }, Symbol.prototype.getTop = function() {
+            var y = this.getY(), x = this.getX() + this.width / 2;
+            return {
+                x: x,
+                y: y
+            };
+        }, Symbol.prototype.getBottom = function() {
+            var y = this.getY() + this.height, x = this.getX() + this.width / 2;
+            return {
+                x: x,
+                y: y
+            };
+        }, Symbol.prototype.getLeft = function() {
+            var y = this.getY() + this.group.getBBox().height / 2, x = this.getX();
+            return {
+                x: x,
+                y: y
+            };
+        }, Symbol.prototype.getRight = function() {
+            var y = this.getY() + this.group.getBBox().height / 2, x = this.getX() + this.group.getBBox().width;
+            return {
+                x: x,
+                y: y
+            };
+        }, Symbol.prototype.render = function() {
+            if (this.next) {
+                var lineLength = this.getAttr("line-length");
+                if ("right" === this.next_direction) {
+                    var rightPoint = this.getRight();
+                    if (!this.next.isPositioned) {
+                        this.next.setY(rightPoint.y - this.next.height / 2), this.next.shiftX(this.group.getBBox().x + this.width + lineLength);
+                        var self = this;
+                        !function shift() {
+                            for (var symb, hasSymbolUnder = !1, i = 0, len = self.chart.symbols.length; len > i; i++) {
+                                symb = self.chart.symbols[i];
+                                var diff = Math.abs(symb.getCenter().x - self.next.getCenter().x);
+                                if (symb.getCenter().y > self.next.getCenter().y && diff <= self.next.width / 2) {
+                                    hasSymbolUnder = !0;
+                                    break;
+                                }
+                            }
+                            hasSymbolUnder && (self.next.setX(symb.getX() + symb.width + lineLength), shift());
+                        }(), this.next.isPositioned = !0, this.next.render();
+                    }
+                } else {
+                    var bottomPoint = this.getBottom();
+                    this.next.isPositioned || (this.next.shiftY(this.getY() + this.height + lineLength), 
+                    this.next.setX(bottomPoint.x - this.next.width / 2), this.next.isPositioned = !0, 
+                    this.next.render());
+                }
+            }
+        }, Symbol.prototype.renderLines = function() {
+            this.next && (this.next_direction ? this.drawLineTo(this.next, "", this.next_direction) : this.drawLineTo(this.next));
+        }, Symbol.prototype.drawLineTo = function(symbol, text, origin) {
+            this.connectedTo.indexOf(symbol) < 0 && this.connectedTo.push(symbol);
+            var line, x = this.getCenter().x, y = this.getCenter().y, right = this.getRight(), bottom = this.getBottom(), left = this.getLeft(), symbolX = symbol.getCenter().x, symbolY = symbol.getCenter().y, symbolTop = symbol.getTop(), symbolRight = symbol.getRight(), symbolLeft = symbol.getLeft(), isOnSameColumn = x === symbolX, isOnSameLine = y === symbolY, isUnder = symbolY > y, isUpper = y > symbolY || this === symbol, isLeft = x > symbolX, isRight = symbolX > x, maxX = 0, lineLength = this.getAttr("line-length"), lineWith = this.getAttr("line-width");
+            if (origin && "bottom" !== origin || !isOnSameColumn || !isUnder) if (origin && "right" !== origin || !isOnSameLine || !isRight) if (origin && "left" !== origin || !isOnSameLine || !isLeft) if (origin && "right" !== origin || !isOnSameColumn || !isUpper) if (origin && "right" !== origin || !isOnSameColumn || !isUnder) if (origin && "bottom" !== origin || !isLeft) if (origin && "bottom" !== origin || !isRight) if (origin && "right" === origin && isLeft) line = drawLine(this.chart, right, [ {
+                x: right.x + lineLength / 2,
+                y: right.y
+            }, {
+                x: right.x + lineLength / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.rightStart = !0, symbol.topEnd = !0, maxX = right.x + lineLength / 2; else if (origin && "right" === origin && isRight) line = drawLine(this.chart, right, [ {
+                x: symbolTop.x,
+                y: right.y
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.rightStart = !0, symbol.topEnd = !0, maxX = right.x + lineLength / 2; else if (origin && "bottom" === origin && isOnSameColumn && isUpper) line = drawLine(this.chart, bottom, [ {
+                x: bottom.x,
+                y: bottom.y + lineLength / 2
+            }, {
+                x: right.x + lineLength / 2,
+                y: bottom.y + lineLength / 2
+            }, {
+                x: right.x + lineLength / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.bottomStart = !0, symbol.topEnd = !0, maxX = bottom.x + lineLength / 2; else if ("left" === origin && isOnSameColumn && isUpper) {
+                var diffX = left.x - lineLength / 2;
+                symbolLeft.x < left.x && (diffX = symbolLeft.x - lineLength / 2), line = drawLine(this.chart, left, [ {
+                    x: diffX,
+                    y: left.y
+                }, {
+                    x: diffX,
+                    y: symbolTop.y - lineLength / 2
+                }, {
+                    x: symbolTop.x,
+                    y: symbolTop.y - lineLength / 2
+                }, {
+                    x: symbolTop.x,
+                    y: symbolTop.y
+                } ], text), this.leftStart = !0, symbol.topEnd = !0, maxX = left.x;
+            } else "left" === origin && (line = drawLine(this.chart, left, [ {
+                x: symbolTop.x + (left.x - symbolTop.x) / 2,
+                y: left.y
+            }, {
+                x: symbolTop.x + (left.x - symbolTop.x) / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.leftStart = !0, symbol.topEnd = !0, maxX = left.x); else line = drawLine(this.chart, bottom, [ {
+                x: bottom.x,
+                y: bottom.y + lineLength / 2
+            }, {
+                x: bottom.x + (bottom.x - symbolTop.x) / 2,
+                y: bottom.y + lineLength / 2
+            }, {
+                x: bottom.x + (bottom.x - symbolTop.x) / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.bottomStart = !0, symbol.topEnd = !0, maxX = bottom.x + (bottom.x - symbolTop.x) / 2; else line = this.leftEnd && isUpper ? drawLine(this.chart, bottom, [ {
+                x: bottom.x,
+                y: bottom.y + lineLength / 2
+            }, {
+                x: bottom.x + (bottom.x - symbolTop.x) / 2,
+                y: bottom.y + lineLength / 2
+            }, {
+                x: bottom.x + (bottom.x - symbolTop.x) / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text) : drawLine(this.chart, bottom, [ {
+                x: bottom.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.bottomStart = !0, symbol.topEnd = !0, maxX = bottom.x + (bottom.x - symbolTop.x) / 2; else line = drawLine(this.chart, right, [ {
+                x: right.x + lineLength / 2,
+                y: right.y
+            }, {
+                x: right.x + lineLength / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.rightStart = !0, symbol.topEnd = !0, maxX = right.x + lineLength / 2; else line = drawLine(this.chart, right, [ {
+                x: right.x + lineLength / 2,
+                y: right.y
+            }, {
+                x: right.x + lineLength / 2,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y - lineLength / 2
+            }, {
+                x: symbolTop.x,
+                y: symbolTop.y
+            } ], text), this.rightStart = !0, symbol.topEnd = !0, maxX = right.x + lineLength / 2; else line = drawLine(this.chart, left, symbolRight, text), 
+            this.leftStart = !0, symbol.rightEnd = !0, maxX = symbolRight.x; else line = drawLine(this.chart, right, symbolLeft, text), 
+            this.rightStart = !0, symbol.leftEnd = !0, maxX = symbolLeft.x; else line = drawLine(this.chart, bottom, symbolTop, text), 
+            this.bottomStart = !0, symbol.topEnd = !0, maxX = bottom.x;
+            if (//update line style
+            this.lineStyle[symbol.key] && line && line.attr(this.lineStyle[symbol.key]), line) {
+                for (var l = 0, llen = this.chart.lines.length; llen > l; l++) for (var len, otherLine = this.chart.lines[l], ePath = otherLine.attr("path"), lPath = line.attr("path"), iP = 0, lenP = ePath.length - 1; lenP > iP; iP++) {
+                    var newPath = [];
+                    newPath.push([ "M", ePath[iP][1], ePath[iP][2] ]), newPath.push([ "L", ePath[iP + 1][1], ePath[iP + 1][2] ]);
+                    for (var line1_from_x = newPath[0][1], line1_from_y = newPath[0][2], line1_to_x = newPath[1][1], line1_to_y = newPath[1][2], lP = 0, lenlP = lPath.length - 1; lenlP > lP; lP++) {
+                        var newLinePath = [];
+                        newLinePath.push([ "M", lPath[lP][1], lPath[lP][2] ]), newLinePath.push([ "L", lPath[lP + 1][1], lPath[lP + 1][2] ]);
+                        var line2_from_x = newLinePath[0][1], line2_from_y = newLinePath[0][2], line2_to_x = newLinePath[1][1], line2_to_y = newLinePath[1][2], res = checkLineIntersection(line1_from_x, line1_from_y, line1_to_x, line1_to_y, line2_from_x, line2_from_y, line2_to_x, line2_to_y);
+                        if (res.onLine1 && res.onLine2) {
+                            var newSegment;
+                            line2_from_y === line2_to_y ? line2_from_x > line2_to_x ? (newSegment = [ "L", res.x + 2 * lineWith, line2_from_y ], 
+                            lPath.splice(lP + 1, 0, newSegment), newSegment = [ "C", res.x + 2 * lineWith, line2_from_y, res.x, line2_from_y - 4 * lineWith, res.x - 2 * lineWith, line2_from_y ], 
+                            lPath.splice(lP + 2, 0, newSegment), line.attr("path", lPath)) : (newSegment = [ "L", res.x - 2 * lineWith, line2_from_y ], 
+                            lPath.splice(lP + 1, 0, newSegment), newSegment = [ "C", res.x - 2 * lineWith, line2_from_y, res.x, line2_from_y - 4 * lineWith, res.x + 2 * lineWith, line2_from_y ], 
+                            lPath.splice(lP + 2, 0, newSegment), line.attr("path", lPath)) : line2_from_y > line2_to_y ? (newSegment = [ "L", line2_from_x, res.y + 2 * lineWith ], 
+                            lPath.splice(lP + 1, 0, newSegment), newSegment = [ "C", line2_from_x, res.y + 2 * lineWith, line2_from_x + 4 * lineWith, res.y, line2_from_x, res.y - 2 * lineWith ], 
+                            lPath.splice(lP + 2, 0, newSegment), line.attr("path", lPath)) : (newSegment = [ "L", line2_from_x, res.y - 2 * lineWith ], 
+                            lPath.splice(lP + 1, 0, newSegment), newSegment = [ "C", line2_from_x, res.y - 2 * lineWith, line2_from_x + 4 * lineWith, res.y, line2_from_x, res.y + 2 * lineWith ], 
+                            lPath.splice(lP + 2, 0, newSegment), line.attr("path", lPath)), lP += 2, len += 2;
+                        }
+                    }
+                }
+                this.chart.lines.push(line);
+            }
+            (!this.chart.maxXFromLine || this.chart.maxXFromLine && maxX > this.chart.maxXFromLine) && (this.chart.maxXFromLine = maxX);
+        }, module.exports = Symbol;
+    }, /* 3 */
+    /*!************************************!*\
+  !*** ./src/flowchart.functions.js ***!
+  \************************************/
+    /***/
+    function(module, exports) {
+        function drawPath(chart, location, points) {
+            var i, len, path = "M{0},{1}";
+            for (i = 2, len = 2 * points.length + 2; len > i; i += 2) path += " L{" + i + "},{" + (i + 1) + "}";
+            var pathValues = [ location.x, location.y ];
+            for (i = 0, len = points.length; len > i; i++) pathValues.push(points[i].x), pathValues.push(points[i].y);
+            var symbol = chart.paper.path(path, pathValues);
+            symbol.attr("stroke", chart.options["element-color"]), symbol.attr("stroke-width", chart.options["line-width"]);
+            var font = chart.options.font, fontF = chart.options["font-family"], fontW = chart.options["font-weight"];
+            return font && symbol.attr({
+                font: font
+            }), fontF && symbol.attr({
+                "font-family": fontF
+            }), fontW && symbol.attr({
+                "font-weight": fontW
+            }), symbol;
+        }
+        function drawLine(chart, from, to, text) {
+            var i, len;
+            "[object Array]" !== Object.prototype.toString.call(to) && (to = [ to ]);
+            var path = "M{0},{1}";
+            for (i = 2, len = 2 * to.length + 2; len > i; i += 2) path += " L{" + i + "},{" + (i + 1) + "}";
+            var pathValues = [ from.x, from.y ];
+            for (i = 0, len = to.length; len > i; i++) pathValues.push(to[i].x), pathValues.push(to[i].y);
+            var line = chart.paper.path(path, pathValues);
+            line.attr({
+                stroke: chart.options["line-color"],
+                "stroke-width": chart.options["line-width"],
+                "arrow-end": chart.options["arrow-end"]
+            });
+            var font = chart.options.font, fontF = chart.options["font-family"], fontW = chart.options["font-weight"];
+            if (font && line.attr({
+                font: font
+            }), fontF && line.attr({
+                "font-family": fontF
+            }), fontW && line.attr({
+                "font-weight": fontW
+            }), text) {
+                var centerText = !1, textPath = chart.paper.text(0, 0, text), isHorizontal = !1, firstTo = to[0];
+                from.y === firstTo.y && (isHorizontal = !0);
+                var x = 0, y = 0;
+                centerText ? (x = from.x > firstTo.x ? from.x - (from.x - firstTo.x) / 2 : firstTo.x - (firstTo.x - from.x) / 2, 
+                y = from.y > firstTo.y ? from.y - (from.y - firstTo.y) / 2 : firstTo.y - (firstTo.y - from.y) / 2, 
+                isHorizontal ? (x -= textPath.getBBox().width / 2, y -= chart.options["text-margin"]) : (x += chart.options["text-margin"], 
+                y -= textPath.getBBox().height / 2)) : (x = from.x, y = from.y, isHorizontal ? (x += chart.options["text-margin"] / 2, 
+                y -= chart.options["text-margin"]) : (x += chart.options["text-margin"] / 2, y += chart.options["text-margin"])), 
+                textPath.attr({
+                    "text-anchor": "start",
+                    "font-size": chart.options["font-size"],
+                    fill: chart.options["font-color"],
+                    x: x,
+                    y: y
+                }), font && textPath.attr({
+                    font: font
+                }), fontF && textPath.attr({
+                    "font-family": fontF
+                }), fontW && textPath.attr({
+                    "font-weight": fontW
+                });
+            }
+            return line;
+        }
+        function checkLineIntersection(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+            // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+            var denominator, a, b, numerator1, numerator2, result = {
+                x: null,
+                y: null,
+                onLine1: !1,
+                onLine2: !1
+            };
+            // if we cast these lines infinitely in both directions, they intersect here:
+            /*
+	  // it is worth noting that this should be the same as:
+	  x = line2StartX + (b * (line2EndX - line2StartX));
+	  y = line2StartX + (b * (line2EndY - line2StartY));
+	  */
+            // if line1 is a segment and line2 is infinite, they intersect if:
+            // if line2 is a segment and line1 is infinite, they intersect if:
+            return denominator = (line2EndY - line2StartY) * (line1EndX - line1StartX) - (line2EndX - line2StartX) * (line1EndY - line1StartY), 
+            0 === denominator ? result : (a = line1StartY - line2StartY, b = line1StartX - line2StartX, 
+            numerator1 = (line2EndX - line2StartX) * a - (line2EndY - line2StartY) * b, numerator2 = (line1EndX - line1StartX) * a - (line1EndY - line1StartY) * b, 
+            a = numerator1 / denominator, b = numerator2 / denominator, result.x = line1StartX + a * (line1EndX - line1StartX), 
+            result.y = line1StartY + a * (line1EndY - line1StartY), a > 0 && 1 > a && (result.onLine1 = !0), 
+            b > 0 && 1 > b && (result.onLine2 = !0), result);
+        }
+        module.exports = {
+            drawPath: drawPath,
+            drawLine: drawLine,
+            checkLineIntersection: checkLineIntersection
+        };
+    }, /* 4 */
+    /*!********************************!*\
+  !*** ./src/flowchart.parse.js ***!
+  \********************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function parse(input) {
+            function getStyle(s) {
+                var startIndex = s.indexOf("(") + 1, endIndex = s.indexOf(")");
+                return startIndex >= 0 && endIndex >= 0 ? s.substring(startIndex, endIndex) : "{}";
+            }
+            function getSymbol(s) {
+                var startIndex = s.indexOf("(") + 1, endIndex = s.indexOf(")");
+                return startIndex >= 0 && endIndex >= 0 ? chart.symbols[s.substring(0, startIndex - 1)] : chart.symbols[s];
+            }
+            function getNextPath(s) {
+                var next = "next", startIndex = s.indexOf("(") + 1, endIndex = s.indexOf(")");
+                return startIndex >= 0 && endIndex >= 0 && (next = flowSymb.substring(startIndex, endIndex), 
+                next.indexOf(",") < 0 && "yes" !== next && "no" !== next && (next = "next, " + next)), 
+                next;
+            }
+            input = input || "", input = input.trim();
+            for (var chart = {
+                symbols: {},
+                start: null,
+                drawSVG: function(container, options) {
+                    function getDisplaySymbol(s) {
+                        if (dispSymbols[s.key]) return dispSymbols[s.key];
+                        switch (s.symbolType) {
+                          case "start":
+                            dispSymbols[s.key] = new Start(diagram, s);
+                            break;
+
+                          case "end":
+                            dispSymbols[s.key] = new End(diagram, s);
+                            break;
+
+                          case "operation":
+                            dispSymbols[s.key] = new Operation(diagram, s);
+                            break;
+
+                          case "inputoutput":
+                            dispSymbols[s.key] = new InputOutput(diagram, s);
+                            break;
+
+                          case "subroutine":
+                            dispSymbols[s.key] = new Subroutine(diagram, s);
+                            break;
+
+                          case "condition":
+                            dispSymbols[s.key] = new Condition(diagram, s);
+                            break;
+
+                          default:
+                            return new Error("Wrong symbol type!");
+                        }
+                        return dispSymbols[s.key];
+                    }
+                    var self = this;
+                    this.diagram && this.diagram.clean();
+                    var diagram = new FlowChart(container, options);
+                    this.diagram = diagram;
+                    var dispSymbols = {};
+                    !function constructChart(s, prevDisp, prev) {
+                        var dispSymb = getDisplaySymbol(s);
+                        return self.start === s ? diagram.startWith(dispSymb) : prevDisp && prev && !prevDisp.pathOk && (prevDisp instanceof Condition ? (prev.yes === s && prevDisp.yes(dispSymb), 
+                        prev.no === s && prevDisp.no(dispSymb)) : prevDisp.then(dispSymb)), dispSymb.pathOk ? dispSymb : (dispSymb instanceof Condition ? (s.yes && constructChart(s.yes, dispSymb, s), 
+                        s.no && constructChart(s.no, dispSymb, s)) : s.next && constructChart(s.next, dispSymb, s), 
+                        dispSymb);
+                    }(this.start), diagram.render();
+                },
+                clean: function() {
+                    this.diagram.clean();
+                }
+            }, lines = [], prevBreak = 0, i0 = 1, i0len = input.length; i0len > i0; i0++) if ("\n" === input[i0] && "\\" !== input[i0 - 1]) {
+                var line0 = input.substring(prevBreak, i0);
+                prevBreak = i0 + 1, lines.push(line0.replace(/\\\n/g, "\n"));
+            }
+            prevBreak < input.length && lines.push(input.substr(prevBreak));
+            for (var l = 1, len = lines.length; len > l; ) {
+                var currentLine = lines[l];
+                currentLine.indexOf("->") < 0 && currentLine.indexOf("=>") < 0 && currentLine.indexOf("@>") < 0 ? (lines[l - 1] += "\n" + currentLine, 
+                lines.splice(l, 1), len--) : l++;
+            }
+            for (;lines.length > 0; ) {
+                var line = lines.splice(0, 1)[0].trim();
+                if (line.indexOf("=>") >= 0) {
+                    // definition
+                    var parts = line.split("=>"), symbol = {
+                        key: parts[0].replace(/\(.*\)/, ""),
+                        symbolType: parts[1],
+                        text: null,
+                        link: null,
+                        target: null,
+                        flowstate: null,
+                        lineStyle: {},
+                        params: {}
+                    }, params = parts[0].match(/\((.*)\)/);
+                    if (params && params.length > 1) for (var entries = params[1].split(","), i = 0; i < entries.length; i++) {
+                        var entry = entries[0].split("=");
+                        2 == entry.length && (symbol.params[entry[0]] = entry[1]);
+                    }
+                    var sub;
+                    /* adding support for links */
+                    if (symbol.symbolType.indexOf(": ") >= 0 && (sub = symbol.symbolType.split(": "), 
+                    symbol.symbolType = sub.shift(), symbol.text = sub.join(": ")), symbol.text && symbol.text.indexOf(":>") >= 0 ? (sub = symbol.text.split(":>"), 
+                    symbol.text = sub.shift(), symbol.link = sub.join(":>")) : symbol.symbolType.indexOf(":>") >= 0 && (sub = symbol.symbolType.split(":>"), 
+                    symbol.symbolType = sub.shift(), symbol.link = sub.join(":>")), symbol.symbolType.indexOf("\n") >= 0 && (symbol.symbolType = symbol.symbolType.split("\n")[0]), 
+                    symbol.link) {
+                        var startIndex = symbol.link.indexOf("[") + 1, endIndex = symbol.link.indexOf("]");
+                        startIndex >= 0 && endIndex >= 0 && (symbol.target = symbol.link.substring(startIndex, endIndex), 
+                        symbol.link = symbol.link.substring(0, startIndex - 1));
+                    }
+                    /* end of link support */
+                    /* adding support for flowstates */
+                    if (symbol.text && symbol.text.indexOf("|") >= 0) {
+                        var txtAndState = symbol.text.split("|");
+                        symbol.flowstate = txtAndState.pop().trim(), symbol.text = txtAndState.join("|");
+                    }
+                    /* end of flowstate support */
+                    chart.symbols[symbol.key] = symbol;
+                } else if (line.indexOf("->") >= 0) for (var flowSymbols = line.split("->"), i = 0, lenS = flowSymbols.length; lenS > i; i++) {
+                    var flowSymb = flowSymbols[i], realSymb = getSymbol(flowSymb), next = getNextPath(flowSymb), direction = null;
+                    if (next.indexOf(",") >= 0) {
+                        var condOpt = next.split(",");
+                        next = condOpt[0], direction = condOpt[1].trim();
+                    }
+                    if (chart.start || (chart.start = realSymb), lenS > i + 1) {
+                        var nextSymb = flowSymbols[i + 1];
+                        realSymb[next] = getSymbol(nextSymb), realSymb["direction_" + next] = direction, 
+                        direction = null;
+                    }
+                } else if (line.indexOf("@>") >= 0) for (var lineStyleSymbols = line.split("@>"), i = 0, lenS = lineStyleSymbols.length; lenS > i; i++) if (i + 1 != lenS) {
+                    var curSymb = getSymbol(lineStyleSymbols[i]), nextSymb = getSymbol(lineStyleSymbols[i + 1]);
+                    curSymb.lineStyle[nextSymb.key] = JSON.parse(getStyle(lineStyleSymbols[i + 1]));
+                }
+            }
+            return chart;
+        }
+        var FlowChart = __webpack_require__(/*! ./flowchart.chart */ 6), Start = __webpack_require__(/*! ./flowchart.symbol.start */ 12), End = __webpack_require__(/*! ./flowchart.symbol.end */ 9), Operation = __webpack_require__(/*! ./flowchart.symbol.operation */ 11), InputOutput = __webpack_require__(/*! ./flowchart.symbol.inputoutput */ 10), Subroutine = __webpack_require__(/*! ./flowchart.symbol.subroutine */ 13), Condition = __webpack_require__(/*! ./flowchart.symbol.condition */ 5);
+        module.exports = parse;
+    }, /* 5 */
+    /*!*******************************************!*\
+  !*** ./src/flowchart.symbol.condition.js ***!
+  \*******************************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function Condition(chart, options) {
+            options = options || {}, Symbol.call(this, chart, options), this.textMargin = this.getAttr("text-margin"), 
+            this.yes_direction = "bottom", this.no_direction = "right", this.params = options.params, 
+            options.yes && options.direction_yes && options.no && !options.direction_no ? "right" === options.direction_yes ? (this.no_direction = "bottom", 
+            this.yes_direction = "right") : (this.no_direction = "right", this.yes_direction = "bottom") : options.yes && !options.direction_yes && options.no && options.direction_no ? "right" === options.direction_no ? (this.yes_direction = "bottom", 
+            this.no_direction = "right") : (this.yes_direction = "right", this.no_direction = "bottom") : (this.yes_direction = "bottom", 
+            this.no_direction = "right"), this.yes_direction = this.yes_direction || "bottom", 
+            this.no_direction = this.no_direction || "right", this.text.attr({
+                x: 2 * this.textMargin
+            });
+            var width = this.text.getBBox().width + 3 * this.textMargin;
+            width += width / 2;
+            var height = this.text.getBBox().height + 2 * this.textMargin;
+            height += height / 2, height = Math.max(.5 * width, height);
+            var startX = width / 4, startY = height / 4;
+            this.text.attr({
+                x: startX + this.textMargin / 2
+            });
+            var start = {
+                x: startX,
+                y: startY
+            }, points = [ {
+                x: startX - width / 4,
+                y: startY + height / 4
+            }, {
+                x: startX - width / 4 + width / 2,
+                y: startY + height / 4 + height / 2
+            }, {
+                x: startX - width / 4 + width,
+                y: startY + height / 4
+            }, {
+                x: startX - width / 4 + width / 2,
+                y: startY + height / 4 - height / 2
+            }, {
+                x: startX - width / 4,
+                y: startY + height / 4
+            } ], symbol = drawPath(chart, start, points);
+            symbol.attr({
+                stroke: this.getAttr("element-color"),
+                "stroke-width": this.getAttr("line-width"),
+                fill: this.getAttr("fill")
+            }), options.link && symbol.attr("href", options.link), options.target && symbol.attr("target", options.target), 
+            options.key && (symbol.node.id = options.key), symbol.node.setAttribute("class", this.getAttr("class")), 
+            this.text.attr({
+                y: symbol.getBBox().height / 2
+            }), this.group.push(symbol), symbol.insertBefore(this.text), this.initialize();
+        }
+        var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits, drawAPI = __webpack_require__(/*! ./flowchart.functions */ 3), drawPath = drawAPI.drawPath;
+        inherits(Condition, Symbol), Condition.prototype.render = function() {
+            this.yes_direction && (this[this.yes_direction + "_symbol"] = this.yes_symbol), 
+            this.no_direction && (this[this.no_direction + "_symbol"] = this.no_symbol);
+            var lineLength = this.getAttr("line-length");
+            if (this.bottom_symbol) {
+                var bottomPoint = this.getBottom();
+                this.bottom_symbol.isPositioned || (this.bottom_symbol.shiftY(this.getY() + this.height + lineLength), 
+                this.bottom_symbol.setX(bottomPoint.x - this.bottom_symbol.width / 2), this.bottom_symbol.isPositioned = !0, 
+                this.bottom_symbol.render());
+            }
+            if (this.right_symbol) {
+                var rightPoint = this.getRight();
+                if (!this.right_symbol.isPositioned) {
+                    this.right_symbol.setY(rightPoint.y - this.right_symbol.height / 2), this.right_symbol.shiftX(this.group.getBBox().x + this.width + lineLength);
+                    var self = this;
+                    !function shift() {
+                        for (var symb, hasSymbolUnder = !1, i = 0, len = self.chart.symbols.length; len > i; i++) if (symb = self.chart.symbols[i], 
+                        !self.params["align-next"] || "no" !== self.params["align-next"]) {
+                            var diff = Math.abs(symb.getCenter().x - self.right_symbol.getCenter().x);
+                            if (symb.getCenter().y > self.right_symbol.getCenter().y && diff <= self.right_symbol.width / 2) {
+                                hasSymbolUnder = !0;
+                                break;
+                            }
+                        }
+                        hasSymbolUnder && (self.right_symbol.setX(symb.getX() + symb.width + lineLength), 
+                        shift());
+                    }(), this.right_symbol.isPositioned = !0, this.right_symbol.render();
+                }
+            }
+        }, Condition.prototype.renderLines = function() {
+            this.yes_symbol && this.drawLineTo(this.yes_symbol, this.getAttr("yes-text"), this.yes_direction), 
+            this.no_symbol && this.drawLineTo(this.no_symbol, this.getAttr("no-text"), this.no_direction);
+        }, module.exports = Condition;
+    }, /* 6 */
+    /*!********************************!*\
+  !*** ./src/flowchart.chart.js ***!
+  \********************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function FlowChart(container, options) {
+            options = options || {}, this.paper = new Raphael(container), this.options = defaults(options, defaultOptions), 
+            this.symbols = [], this.lines = [], this.start = null;
+        }
+        var Raphael = __webpack_require__(/*! raphael */ 15), defaults = __webpack_require__(/*! ./flowchart.helpers */ 1).defaults, defaultOptions = __webpack_require__(/*! ./flowchart.defaults */ 7), Condition = __webpack_require__(/*! ./flowchart.symbol.condition */ 5);
+        FlowChart.prototype.handle = function(symbol) {
+            this.symbols.indexOf(symbol) <= -1 && this.symbols.push(symbol);
+            var flowChart = this;
+            return symbol instanceof Condition ? (symbol.yes = function(nextSymbol) {
+                return symbol.yes_symbol = nextSymbol, symbol.no_symbol && (symbol.pathOk = !0), 
+                flowChart.handle(nextSymbol);
+            }, symbol.no = function(nextSymbol) {
+                return symbol.no_symbol = nextSymbol, symbol.yes_symbol && (symbol.pathOk = !0), 
+                flowChart.handle(nextSymbol);
+            }) : symbol.then = function(nextSymbol) {
+                return symbol.next = nextSymbol, symbol.pathOk = !0, flowChart.handle(nextSymbol);
+            }, symbol;
+        }, FlowChart.prototype.startWith = function(symbol) {
+            return this.start = symbol, this.handle(symbol);
+        }, FlowChart.prototype.render = function() {
+            var symbol, line, maxWidth = 0, maxHeight = 0, i = 0, len = 0, maxX = 0, maxY = 0, minX = 0, minY = 0;
+            for (i = 0, len = this.symbols.length; len > i; i++) symbol = this.symbols[i], symbol.width > maxWidth && (maxWidth = symbol.width), 
+            symbol.height > maxHeight && (maxHeight = symbol.height);
+            for (i = 0, len = this.symbols.length; len > i; i++) symbol = this.symbols[i], symbol.shiftX(this.options.x + (maxWidth - symbol.width) / 2 + this.options["line-width"]), 
+            symbol.shiftY(this.options.y + (maxHeight - symbol.height) / 2 + this.options["line-width"]);
+            // for (i = 0, len = this.symbols.length; i < len; i++) {
+            //   symbol = this.symbols[i];
+            //   symbol.render();
+            // }
+            for (this.start.render(), i = 0, len = this.symbols.length; len > i; i++) symbol = this.symbols[i], 
+            symbol.renderLines();
+            maxX = this.maxXFromLine;
+            var x, y;
+            for (i = 0, len = this.symbols.length; len > i; i++) symbol = this.symbols[i], x = symbol.getX() + symbol.width, 
+            y = symbol.getY() + symbol.height, x > maxX && (maxX = x), y > maxY && (maxY = y);
+            for (i = 0, len = this.lines.length; len > i; i++) {
+                line = this.lines[i].getBBox(), x = line.x, y = line.y;
+                var x2 = line.x2, y2 = line.y2;
+                minX > x && (minX = x), minY > y && (minY = y), x2 > maxX && (maxX = x2), y2 > maxY && (maxY = y2);
+            }
+            var scale = this.options.scale, lineWidth = this.options["line-width"];
+            0 > minX && (minX -= lineWidth), 0 > minY && (minY -= lineWidth);
+            var width = maxX + lineWidth - minX, height = maxY + lineWidth - minY;
+            this.paper.setSize(width * scale, height * scale), this.paper.setViewBox(minX, minY, width, height, !0);
+        }, FlowChart.prototype.clean = function() {
+            if (this.paper) {
+                var paperDom = this.paper.canvas;
+                paperDom.parentNode.removeChild(paperDom);
+            }
+        }, module.exports = FlowChart;
+    }, /* 7 */
+    /*!***********************************!*\
+  !*** ./src/flowchart.defaults.js ***!
+  \***********************************/
+    /***/
+    function(module, exports) {
+        // defaults
+        module.exports = {
+            x: 0,
+            y: 0,
+            "line-width": 3,
+            "line-length": 50,
+            "text-margin": 10,
+            "font-size": 14,
+            "font-color": "black",
+            // 'font': 'normal',
+            // 'font-family': 'calibri',
+            // 'font-weight': 'normal',
+            "line-color": "black",
+            "element-color": "black",
+            fill: "white",
+            "yes-text": "yes",
+            "no-text": "no",
+            "arrow-end": "block",
+            "class": "flowchart",
+            scale: 1,
+            symbols: {
+                start: {},
+                end: {},
+                condition: {},
+                inputoutput: {},
+                operation: {},
+                subroutine: {}
+            }
+        };
+    }, /* 8 */
+    /*!*******************************!*\
+  !*** ./src/flowchart.shim.js ***!
+  \*******************************/
+    /***/
+    function(module, exports) {
+        // add indexOf to non ECMA-262 standard compliant browsers
+        Array.prototype.indexOf || (Array.prototype.indexOf = function(searchElement) {
+            "use strict";
+            if (null === this) throw new TypeError();
+            var t = Object(this), len = t.length >>> 0;
+            if (0 === len) return -1;
+            var n = 0;
+            if (arguments.length > 0 && (n = Number(arguments[1]), n != n ? n = 0 : 0 !== n && n != 1 / 0 && n != -(1 / 0) && (n = (n > 0 || -1) * Math.floor(Math.abs(n)))), 
+            n >= len) return -1;
+            for (var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0); len > k; k++) if (k in t && t[k] === searchElement) return k;
+            return -1;
+        }), // add lastIndexOf to non ECMA-262 standard compliant browsers
+        Array.prototype.lastIndexOf || (Array.prototype.lastIndexOf = function(searchElement) {
+            "use strict";
+            if (null === this) throw new TypeError();
+            var t = Object(this), len = t.length >>> 0;
+            if (0 === len) return -1;
+            var n = len;
+            arguments.length > 1 && (n = Number(arguments[1]), n != n ? n = 0 : 0 !== n && n != 1 / 0 && n != -(1 / 0) && (n = (n > 0 || -1) * Math.floor(Math.abs(n))));
+            for (var k = n >= 0 ? Math.min(n, len - 1) : len - Math.abs(n); k >= 0; k--) if (k in t && t[k] === searchElement) return k;
+            return -1;
+        }), String.prototype.trim || (String.prototype.trim = function() {
+            return this.replace(/^\s+|\s+$/g, "");
+        });
+    }, /* 9 */
+    /*!*************************************!*\
+  !*** ./src/flowchart.symbol.end.js ***!
+  \*************************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function End(chart, options) {
+            var symbol = chart.paper.rect(0, 0, 0, 0, 20);
+            options = options || {}, options.text = options.text || "End", Symbol.call(this, chart, options, symbol);
+        }
+        var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits;
+        inherits(End, Symbol), module.exports = End;
+    }, /* 10 */
+    /*!*********************************************!*\
+  !*** ./src/flowchart.symbol.inputoutput.js ***!
+  \*********************************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function InputOutput(chart, options) {
+            options = options || {}, Symbol.call(this, chart, options), this.textMargin = this.getAttr("text-margin"), 
+            this.text.attr({
+                x: 3 * this.textMargin
+            });
+            var width = this.text.getBBox().width + 4 * this.textMargin, height = this.text.getBBox().height + 2 * this.textMargin, startX = this.textMargin, startY = height / 2, start = {
+                x: startX,
+                y: startY
+            }, points = [ {
+                x: startX - this.textMargin,
+                y: height
+            }, {
+                x: startX - this.textMargin + width,
+                y: height
+            }, {
+                x: startX - this.textMargin + width + 2 * this.textMargin,
+                y: 0
+            }, {
+                x: startX - this.textMargin + 2 * this.textMargin,
+                y: 0
+            }, {
+                x: startX,
+                y: startY
+            } ], symbol = drawPath(chart, start, points);
+            symbol.attr({
+                stroke: this.getAttr("element-color"),
+                "stroke-width": this.getAttr("line-width"),
+                fill: this.getAttr("fill")
+            }), options.link && symbol.attr("href", options.link), options.target && symbol.attr("target", options.target), 
+            options.key && (symbol.node.id = options.key), symbol.node.setAttribute("class", this.getAttr("class")), 
+            this.text.attr({
+                y: symbol.getBBox().height / 2
+            }), this.group.push(symbol), symbol.insertBefore(this.text), this.initialize();
+        }
+        var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits, drawAPI = __webpack_require__(/*! ./flowchart.functions */ 3), drawPath = drawAPI.drawPath;
+        inherits(InputOutput, Symbol), InputOutput.prototype.getLeft = function() {
+            var y = this.getY() + this.group.getBBox().height / 2, x = this.getX() + this.textMargin;
+            return {
+                x: x,
+                y: y
+            };
+        }, InputOutput.prototype.getRight = function() {
+            var y = this.getY() + this.group.getBBox().height / 2, x = this.getX() + this.group.getBBox().width - this.textMargin;
+            return {
+                x: x,
+                y: y
+            };
+        }, module.exports = InputOutput;
+    }, /* 11 */
+    /*!*******************************************!*\
+  !*** ./src/flowchart.symbol.operation.js ***!
+  \*******************************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function Operation(chart, options) {
+            var symbol = chart.paper.rect(0, 0, 0, 0);
+            options = options || {}, Symbol.call(this, chart, options, symbol);
+        }
+        var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits;
+        inherits(Operation, Symbol), module.exports = Operation;
+    }, /* 12 */
+    /*!***************************************!*\
+  !*** ./src/flowchart.symbol.start.js ***!
+  \***************************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function Start(chart, options) {
+            var symbol = chart.paper.rect(0, 0, 0, 0, 20);
+            options = options || {}, options.text = options.text || "Start", Symbol.call(this, chart, options, symbol);
+        }
+        var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits;
+        inherits(Start, Symbol), module.exports = Start;
+    }, /* 13 */
+    /*!********************************************!*\
+  !*** ./src/flowchart.symbol.subroutine.js ***!
+  \********************************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        function Subroutine(chart, options) {
+            var symbol = chart.paper.rect(0, 0, 0, 0);
+            options = options || {}, Symbol.call(this, chart, options, symbol), symbol.attr({
+                width: this.text.getBBox().width + 4 * this.getAttr("text-margin")
+            }), this.text.attr({
+                x: 2 * this.getAttr("text-margin")
+            });
+            var innerWrap = chart.paper.rect(0, 0, 0, 0);
+            innerWrap.attr({
+                x: this.getAttr("text-margin"),
+                stroke: this.getAttr("element-color"),
+                "stroke-width": this.getAttr("line-width"),
+                width: this.text.getBBox().width + 2 * this.getAttr("text-margin"),
+                height: this.text.getBBox().height + 2 * this.getAttr("text-margin"),
+                fill: this.getAttr("fill")
+            }), options.key && (innerWrap.node.id = options.key + "i");
+            var font = this.getAttr("font"), fontF = this.getAttr("font-family"), fontW = this.getAttr("font-weight");
+            font && innerWrap.attr({
+                font: font
+            }), fontF && innerWrap.attr({
+                "font-family": fontF
+            }), fontW && innerWrap.attr({
+                "font-weight": fontW
+            }), options.link && innerWrap.attr("href", options.link), options.target && innerWrap.attr("target", options.target), 
+            this.group.push(innerWrap), innerWrap.insertBefore(this.text), this.initialize();
+        }
+        var Symbol = __webpack_require__(/*! ./flowchart.symbol */ 2), inherits = __webpack_require__(/*! ./flowchart.helpers */ 1).inherits;
+        inherits(Subroutine, Symbol), module.exports = Subroutine;
+    }, /* 14 */
+    /*!******************************!*\
+  !*** ./src/jquery-plugin.js ***!
+  \******************************/
+    /***/
+    function(module, exports, __webpack_require__) {
+        if ("undefined" != typeof jQuery) {
+            var parse = __webpack_require__(/*! ./flowchart.parse */ 4);
+            !function($) {
+                $.fn.flowChart = function(options) {
+                    return this.each(function() {
+                        var $this = $(this), chart = parse($this.text());
+                        $this.html(""), chart.drawSVG(this, options);
+                    });
+                };
+            }(jQuery);
+        }
+    }, /* 15 */
+    /*!**************************!*\
+  !*** external "Raphael" ***!
+  \**************************/
+    /***/
+    function(module, exports) {
+        module.exports = __WEBPACK_EXTERNAL_MODULE_15__;
+    } ]);
+});
+//# sourceMappingURL=flowchart.js.map
