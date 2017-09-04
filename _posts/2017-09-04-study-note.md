@@ -7,9 +7,7 @@ categories: 經理人MANAGER-today
 thumbnail: book
 tags:
 ---
-<link rel="stylesheet" href="mermaid.min.css">
-<script src="mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true});</script>
+
 # 管理學10大經典理論
 ---
 
@@ -97,7 +95,6 @@ st->op->op2->op3->op4->op5->op6->op
 2. 減少太過競爭的項目
 3. 提升有加值空間的服務
 4. 創造新體驗
-
 ```flow
 st=>start: 檢查藍海
 op=>operation: 買方效益
