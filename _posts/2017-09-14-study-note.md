@@ -19,7 +19,7 @@ tags:
 
 > 伊藤嘉明 : 挑戰既有框架, 不做的風險更大
 
-
+<br>
 
 # 時間戰場
 
@@ -27,14 +27,15 @@ tags:
 
 1. 幫別人省時間
 2. 幫別人把省下的時間, 浪費在美好的事物上
-
+<br>
 [延伸演講 : 羅振宇 時間的朋友 2016跨年演講](https://www.youtube.com/watch?v=9jSkSSzivWQ)
 
 
 
 # 勵志佳句
 
-- What people in the world think of you is really none of your business.
+>Martha Graham : What people in the world think of you is really none of your business.
+
 - Some men have thousands of reasons why they cannot do what they want to, when all they need is one reason why they can.
 - No artist is ahead of his time. He/She is the time; it is just that others are behind the times.
 - Great dancers are not great because of their technique, they are great because of their passion.
