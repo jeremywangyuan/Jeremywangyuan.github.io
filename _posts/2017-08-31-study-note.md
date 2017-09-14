@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      管理學10大經典理論
-date:       2017-09-04 23:00:00
+date:       2017-08-31 23:00:00
 summary:    管理學10大經典理論
 categories: 經理人MANAGER-today 
 thumbnail: book
