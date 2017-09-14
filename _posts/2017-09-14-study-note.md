@@ -18,7 +18,7 @@ tags:
 2. 發揮別人沒有的優勢
 
 > 伊藤嘉明 : 挑戰既有框架, 不做的風險更大
-
+---
 
 # 時間戰場
 
@@ -29,11 +29,11 @@ tags:
 
 <br>
 [延伸演講 : 羅振宇 時間的朋友 2016跨年演講](https://www.youtube.com/watch?v=9jSkSSzivWQ)
-
+---
 
 
 # 勵志佳句
-<br>
+
 >Martha Graham : What people in the world think of you is really none of your business.
 
 - Some men have thousands of reasons why they cannot do what they want to, when all they need is one reason why they can.
