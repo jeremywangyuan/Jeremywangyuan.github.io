@@ -3,7 +3,7 @@ layout:     post
 title:      其他
 date:       2017-09-14 23:00:00
 summary:    其他
-categories: 經理人 
+categories: 經理人MANAGER-today
 thumbnail: book
 tags:
 ---
