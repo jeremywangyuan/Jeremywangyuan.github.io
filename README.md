@@ -10,6 +10,7 @@
 - [carte-noire theme](http://carte-noire.jacobtomlinson.co.uk/) 
 - [Google Analytics](http://www.google.com/analytics/)
 - [favicons](http://realfavicongenerator.net/)
+- [cwTeXHei (Chinese-Traditional)](https://fonts.google.com/earlyaccess#cwTeXHei)
 
 ## Installation and Building
 
