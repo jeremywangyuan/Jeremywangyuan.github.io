@@ -18,7 +18,7 @@ tags:
 
 - [The Bauhaus style](https://www.jp-agency.com/single-post/2017/06/19/%E4%BD%95%E8%AC%82%E3%80%8CBauhaus%E3%80%8D%E9%A2%A8%E6%A0%BC%EF%BC%9FLess-is-more) - 設計應是為了某功能而非裝飾用
 
-
+<br>
 ### 將員工視為資本 非資源
 
 - 輪調職務豐富閱歷 讓員工適得其所
