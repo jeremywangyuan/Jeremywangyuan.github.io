@@ -63,7 +63,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 
 安裝powerline主題
 
-```=
+```
 $ git clone git://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme ~/.ohmyzsh-powerline
 $ cd .ohmyzsh-powerline/
 $ ./install_in_omz.sh
@@ -96,10 +96,10 @@ $ ./install.sh
 
   e.g. Auto suggestions
 
-  ```
-  $ git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-  $ vim .zshrc
-  ```
+```
+$ git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+$ vim .zshrc
+```
 
   將plugins=”” 修改成 `plugins=(zsh-autosuggestions)` 
 
@@ -107,11 +107,11 @@ $ ./install.sh
 
   e.g. 
 
-  ```
-  POWERLINE_HIDE_HOST_NAME="true"
-  POWERLINE_DISABLE_RPOMPT="true"
-  POWERLINE_FULL_CURRENT_PATH="true"
-  ```
+```
+POWERLINE_HIDE_HOST_NAME="true"
+POWERLINE_DISABLE_RPOMPT="true"
+POWERLINE_FULL_CURRENT_PATH="true"
+```
 
 
 
