@@ -3,7 +3,7 @@ layout:     post
 title:      Jekyll + Github page = Personal Website
 date:       2017-08-10 20:30:00
 summary:    Jekyll + Github page = Personal Website
-categories: jekyll
+categories: useful_things
 thumbnail: jekyll
 tags:
 ---
